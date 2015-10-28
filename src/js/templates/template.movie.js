@@ -45,7 +45,8 @@ Templates.movie.body = [
         "</td>",
         "<td class=\"center aligned\">",
             "<div class=\"rating-box\">",
-                "<strong>{{tomatoMeter}}%</strong><br />",
+                "<img class=\"ui avatar image rt\" data-title=\"Critics Rating\" data-content=\"{{generateRTCriticsTitle tomatoImage}}\" src=\"{{generateRTCriticsImage tomatoImage}}\"><span><strong>{{tomatoMeter}}%</strong></span><br />",
+                "<img class=\"ui avatar image rt\" data-title=\"Audience Rating\" data-content=\"{{generateRTUsersTitle tomatoUserMeter}}\" src=\"{{generateRTUsersImage tomatoUserMeter}}\"><span><strong>{{tomatoUserMeter}}%</strong></span><br />",
             "</div>",
             "<div class=\"more-info-box\">",
                 "<button class=\"ui small orange circular icon button\" id=\"btnRTMoreInfo-{{imdbID}}\">",
@@ -92,4 +93,41 @@ Handlebars.registerHelper("generateMetacriticString", function (title) {
 
 Handlebars.registerHelper("addCommas", function (number) {
     return parseInt(number).formatNumber(0);
+});
+
+Handlebars.registerHelper("generateRTCriticsImage", function (image) {
+    var baseUrl = "images/";
+    if (image == "N/A") {
+        return baseUrl + "na.png";
+    }
+
+    return baseUrl + image + ".png";
+});
+
+Handlebars.registerHelper("generateRTCriticsTitle", function (image) {
+    switch (image) {
+        case "certified":
+            return "Certified Fresh!";
+
+        case "fresh":
+            return "Fresh!";
+
+        case "rotten":
+            return "Rotten";
+    }
+
+    return "Rating not available";
+});
+
+Handlebars.registerHelper("generateRTUsersImage", function (rating) {
+    var baseUrl = "images/";
+    return parseInt(rating) < 60
+        ? baseUrl + "rt_audience_no.png"
+        : baseUrl + "rt_audience_yes.png";
+});
+
+Handlebars.registerHelper("generateRTUsersTitle", function (rating) {
+    return parseInt(rating) < 60
+        ? "Only " + rating + "% audiences liked it"
+        : rating + "% audiences liked it!";
 });

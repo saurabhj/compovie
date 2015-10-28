@@ -112,6 +112,8 @@ function addMovieToTable(data) {
         title: "More information",
         html: templateRT(data)
     });
+
+    $(".rt").popup();
 }
 
 /*
