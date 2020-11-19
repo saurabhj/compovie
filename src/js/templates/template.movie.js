@@ -22,7 +22,7 @@ Templates.movie.header = [
 Templates.movie.body = [
     "<tr id=\"tr-{{imdbID}}\" data-rating=\"{{imdbRating}}\">",
         "<td style=\"width: 120px\" class=\"center top aligned\">",
-            "<img src=\"http://img.omdbapi.com/?i={{imdbID}}&apikey=30bfd0c9&h=150\"></img>",
+            "<img src=\"http://img.omdbapi.com/?apikey=636bd88a&h=150&i={{imdbID}}\"></img>",
         "</td>",
         "<td class=\"top aligned\">",
             "<strong>{{Title}} ({{Year}})</strong><br />",
@@ -45,13 +45,9 @@ Templates.movie.body = [
         "</td>",
         "<td class=\"center aligned\">",
             "<div class=\"rating-box\">",
-                "<img class=\"ui avatar image rt\" data-title=\"Critics Rating\" data-content=\"{{generateRTCriticsTitle tomatoImage}}\" src=\"{{generateRTCriticsImage tomatoImage}}\"><span><strong>{{tomatoMeter}}%</strong></span><br />",
-                "<img class=\"ui avatar image rt\" data-title=\"Audience Rating\" data-content=\"{{generateRTUsersTitle tomatoUserMeter}}\" src=\"{{generateRTUsersImage tomatoUserMeter}}\"><span><strong>{{tomatoUserMeter}}%</strong></span><br />",
+                "<strong>{{rt-rating}}</strong>",
             "</div>",
             "<div class=\"more-info-box\">",
-                "<button class=\"ui small orange circular icon button\" id=\"btnRTMoreInfo-{{imdbID}}\">",
-                    "<i class=\"info icon link\"></i>",
-                "</button>",
                 "<a class=\"ui small orange circular icon button\" href=\"http://www.rottentomatoes.com/m/{{generateRTString Title}}\" target=\"_blank\">",
                     "<i class=\"external square icon\"></i>",
                 "</a>",
@@ -76,11 +72,7 @@ Templates.movie.footer = [
 ].join("\n");
 
 Templates.movie.rottenTomatoesBox = [
-    "<strong>Fresh:</strong> {{tomatoFresh}} / {{tomatoReviews}}<br />",
-    "<strong>User Rating:</strong> {{tomatoUserMeter}}%",
-    "<small>({{addCommas tomatoUserReviews}} reviews)</small><br />",
-    "<br />",
-    "<strong><small><em>&ldquo;{{tomatoConsensus}}&rdquo;</em></small></strong><br />",
+    
 ].join("\n");
 
 Handlebars.registerHelper("generateRTString", function (title) {
@@ -93,41 +85,4 @@ Handlebars.registerHelper("generateMetacriticString", function (title) {
 
 Handlebars.registerHelper("addCommas", function (number) {
     return parseInt(number).formatNumber(0);
-});
-
-Handlebars.registerHelper("generateRTCriticsImage", function (image) {
-    var baseUrl = "images/";
-    if (image == "N/A") {
-        return baseUrl + "na.png";
-    }
-
-    return baseUrl + image + ".png";
-});
-
-Handlebars.registerHelper("generateRTCriticsTitle", function (image) {
-    switch (image) {
-        case "certified":
-            return "Certified Fresh!";
-
-        case "fresh":
-            return "Fresh!";
-
-        case "rotten":
-            return "Rotten";
-    }
-
-    return "Rating not available";
-});
-
-Handlebars.registerHelper("generateRTUsersImage", function (rating) {
-    var baseUrl = "images/";
-    return parseInt(rating) < 60
-        ? baseUrl + "rt_audience_no.png"
-        : baseUrl + "rt_audience_yes.png";
-});
-
-Handlebars.registerHelper("generateRTUsersTitle", function (rating) {
-    return parseInt(rating) < 60
-        ? "Only " + rating + "% audiences liked it"
-        : rating + "% audiences liked it!";
 });

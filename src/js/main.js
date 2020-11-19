@@ -13,7 +13,7 @@ $(document).ready(function () {
             $("#divSearch").addClass("loading");
 
             $.ajax({
-                url: "http://www.omdbapi.com/",
+                url: "http://www.omdbapi.com/?apikey=636bd88a",
                 dataType: "jsonp",
                 data: {
                     s: query.trim(),
@@ -60,7 +60,7 @@ function addMovie(imdbId) {
     }
 
     $.ajax({
-        url: "http://www.omdbapi.com/",
+        url: "http://www.omdbapi.com/?apikey=636bd88a",
         dataType: "jsonp",
         data: {
             i: imdbId,
@@ -83,6 +83,13 @@ function addMovieToTable(data) {
         $('.popup').popup({ inline: true });
     }
 
+    data["rt-rating"] = "N/A";
+    data.Ratings.forEach(function(rating) {
+        if (rating.Source == "Rotten Tomatoes") {
+            data["rt-rating"] = rating.Value;
+        }
+    });
+
     var template = Handlebars.compile(Templates.movie.body);
     var html = template(data);
 
@@ -104,14 +111,6 @@ function addMovieToTable(data) {
             }
         });
     }
-
-    var templateRT = Handlebars.compile(Templates.movie.rottenTomatoesBox);
-
-    // Adding more information for IMDB
-    $("#btnRTMoreInfo-" + data.imdbID).popup({
-        title: "More information",
-        html: templateRT(data)
-    });
 
     $(".rt").popup();
 }
