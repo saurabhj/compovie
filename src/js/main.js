@@ -13,7 +13,7 @@ $(document).ready(function () {
             $("#divSearch").addClass("loading");
 
             $.ajax({
-                url: "http://www.omdbapi.com/?apikey=636bd88a",
+                url: "https://www.omdbapi.com/?apikey=636bd88a",
                 dataType: "jsonp",
                 data: {
                     s: query.trim(),
@@ -60,7 +60,7 @@ function addMovie(imdbId) {
     }
 
     $.ajax({
-        url: "http://www.omdbapi.com/?apikey=636bd88a",
+        url: "https://www.omdbapi.com/?apikey=636bd88a",
         dataType: "jsonp",
         data: {
             i: imdbId,

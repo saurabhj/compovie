@@ -22,7 +22,7 @@ Templates.movie.header = [
 Templates.movie.body = [
     "<tr id=\"tr-{{imdbID}}\" data-rating=\"{{imdbRating}}\">",
         "<td style=\"width: 120px\" class=\"center top aligned\">",
-            "<img src=\"http://img.omdbapi.com/?apikey=636bd88a&h=150&i={{imdbID}}\"></img>",
+            "<img src=\"https://img.omdbapi.com/?apikey=636bd88a&h=150&i={{imdbID}}\"></img>",
         "</td>",
         "<td class=\"top aligned\">",
             "<strong>{{Title}} ({{Year}})</strong><br />",
